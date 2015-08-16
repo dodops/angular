@@ -1,17 +1,17 @@
-app.controller("listaTelefonicaCtrl", function($scope, $http){
+app.controller("listaTelefonicaCtrl", function($scope, $http, contactsAPI, operadorasAPI){
   $scope.app = "Lista Telefonica";
   $scope.contacts = [];
   $scope.operadoras = [];
 
   var loadContacts = function(){
-    $http.get("https://fierce-refuge-6322.herokuapp.com/contacts").success(function(data){
+    contactsAPI.getContacts().success(function(data){
       $scope.contacts = data;
       console.log(data);
     });
   };
 
   var loadOperadoras = function(){
-    $http.get("https://fierce-refuge-6322.herokuapp.com/operadoras").success(function(data){
+    operadorasAPI.getOperadoras().success(function(data){
       $scope.operadoras = data;
       console.log(data);
     });
@@ -23,7 +23,7 @@ app.controller("listaTelefonicaCtrl", function($scope, $http){
     });
   };
   $scope.addContact = function (contact) {
-    $http.post("https://fierce-refuge-6322.herokuapp.com/contacts", contact).success(function(data){
+    contactsAPI.saveContact(contact).success(function(data){
       delete $scope.contact;
       $scope.contactForm.$setPristine();
       loadContacts();
