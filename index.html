@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="listaTelefonica">
+  <head>
+    <meta charset="utf-8">
+    <title>Lista Telefonica</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/person.css" media="screen" charset="utf-8">
+    <script src="lib/angularjs/angular.js" charset="utf-8"></script>
+    <script src="lib/angularjs/angular-messages.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+    <script src="js/controllers/listaTelefonicaCtrl.js" charset="utf-8"></script>
+  </head>
+  <body ng-controller="listaTelefonicaCtrl">
+    <div class="jumbotron">
+      <h3>{{app}}</h3>
+      <input type="text" name="search" ng-model="searchCriteria" class="form-control">
+      <div class="table-responsive">
+        <table class="table table-striped" ng-show="contacts.length > 0">
+          <tr>
+            <th></th>
+            <th><a ng-click="orderByField('nome')" href="" >Nome</a></th>
+            <th><a ng-click="orderByField('telefone')" href="">Telefone</a></th>
+            <th>Operadora</th>
+          </tr>
+          <tr ng-repeat="contact in contacts | filter:searchCriteria | orderBy:orderCriteria:directionSearch">
+            <td><input type="checkbox" ng-model="contact.selecionado"></td>
+            <td>{{contact.nome}}</td>
+            <td>{{contact.telefone}}</td>
+            <td>{{contact.operadora.nome}}</td>
+          </tr>
+        </table>
+      </div>
+      <hr/>
+      <form accept-charset="UTF-8" method="post" id="new_contact" class="form" name="contactForm">
+        <input type="text" ng-model="contact.nome" name="nome" class="form-control" placeholder="Nome" ng-required="true" ng-minlength="10">
+        <input type="text" ng-model="contact.telefone" name="telefone" class="form-control" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
+        <select ng-model="contact.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras | orderBy:'nome'" class="form-control">
+          <option value="">Selecione uma operadora</option>
+        </select>
+        <button type="submit" name="commit" value="Create" class="btn btn-primary btn-block" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Adicionar Contato</button>
+        <button type="button"class="btn btn-danger btn-block" ng-click="removeContact(contact)" ng-if="isContactSelected(contacts)">Remover Contato</button>
+      </form>
+      <div ng-show="contactForm.nome.$dirty || contactForm.telefone.$dirty">
+        <div class="alert alert-danger" ng-messages="contactForm.nome.$error">
+          <div ng-message="required">
+            <small>Por favor, preencha todos os campos corretamente!</small>
+          </div>
+          <div ng-message="minlength">
+            <small>O campo nome deve conter no mínimo 10 caracteres.</small>
+          </div>
+        </div>
+        <div class="alert alert-danger" ng-messages="contactForm.telefone.$error">
+          <div ng-message="required">
+            <small>Por favor, preencha o campo telefone!</small>
+          </div>
+          <div ng-message="pattern">
+            <small>O campo telefone deve ter o formato DDDDD-DDDD.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
