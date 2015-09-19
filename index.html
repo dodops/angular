@@ -11,6 +11,7 @@
     <script src="js/controllers/listaTelefonicaCtrl.js" charset="utf-8"></script>
     <script src="js/services/contactsAPIservice.js" charset="utf-8"></script>
     <script src="js/services/operadorasAPIservice.js" charset="utf-8"></script>
+    <script src="js/directives/uiDateDirective.js" charset="utf-8"></script>
   </head>
   <body ng-controller="listaTelefonicaCtrl">
     <div class="jumbotron">
@@ -36,6 +37,7 @@
       <form accept-charset="UTF-8" method="post" id="new_contact" class="form" name="contactForm">
         <input type="text" ng-model="contact.nome" name="nome" class="form-control" placeholder="Nome" ng-required="true" ng-minlength="10">
         <input type="text" ng-model="contact.telefone" name="telefone" class="form-control" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
+        <input class="form-control" ng-model="contact.data" nome="data" type="text" placeholder="Data" ui-date>
         <select ng-model="contact.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras | orderBy:'nome'" class="form-control">
           <option value="">Selecione uma operadora</option>
         </select>
