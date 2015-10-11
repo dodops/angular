@@ -1,4 +1,4 @@
-angular.module("listaTelefonica").factory("contactsAPI", function($http){
+app.factory("contactsAPI", function($http){
   var _getContacts = function(){
     return $http.get("https://fierce-refuge-6322.herokuapp.com/contacts");
   };
