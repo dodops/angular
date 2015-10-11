@@ -1,0 +1,22 @@
+<div class="jumbotron">
+  <input type="text" name="search" ng-model="searchCriteria" class="form-control">
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="contacts.length > 0">
+      <tr>
+        <th></th>
+        <th><a ng-click="orderByField('nome')" href="" >Nome</a></th>
+        <th><a ng-click="orderByField('telefone')" href="">Telefone</a></th>
+        <th>Operadora</th>
+      </tr>
+      <tr ng-repeat="contact in contacts | filter:searchCriteria | orderBy:orderCriteria:directionSearch">
+        <td><input type="checkbox" ng-model="contact.selecionado"></td>
+        <td>{{contact.nome}}</td>
+        <td>{{contact.telefone}}</td>
+        <td>{{contact.operadora.nome}}</td>
+      </tr>
+    </table>
+  </div>
+  <a href="#/newContact">
+  <button type="button"class="btn btn-primary btn-block">Novo Contact</button></a>
+  <hr/>
+</div>
